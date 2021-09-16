@@ -20,7 +20,13 @@ class PostsController extends Controller
         2. 게시글 목록 만들어주는 blade에  읽어온 데이터를 전달
            실행.
         */
-        $posts = Post::all();
+
+        //select * from posts order by created_at desc(내림차순) 
+        //하기 위해 order by사용
+        //제일 최신순 --> latest
+        // $posts = Post::latest()->get();
+        // $posts = Post::oldest()->get();
+        $posts = Post::latest()->paginate(10);
         return view('bbs.index', ['posts' => $posts]);
     }
 
@@ -46,9 +52,26 @@ class PostsController extends Controller
             'title' => 'required',
             'content' => 'required|min:3',
         ]);
+
+
+
+        if ($request->hasFile('image')) {
+            $fileName = time() . '_' .
+                $request->file('image')->getClientOriginalName();
+            $request->file('image')
+                ->storeAs('public/images', $fileName);
+        }
         // dd($request->all());
         $input = array_merge($request->all(), ["user_id" => Auth::user()->id]);
+        //array_merge : 배열을 합침 
         // --> 3개는 들어가고 나머지는 없어도 됨.
+
+        //Eloquent model의 white list인 $fillable에 기술해야 
+        //Post::create사용가능
+        if ($fileName) {
+            $input = array_merge($input, ['image' => $fileName]);
+        }
+
         Post::create($input);
 
         return redirect()->route('posts.index');
@@ -63,7 +86,10 @@ class PostsController extends Controller
      */
     public function show($id)
     {
-        //
+        //id에 해당하는 Post를 데이터베이스에서 인출하고 
+        $post = Post::find($id);
+        //그 놈을 상세보기 뷰로 전달
+        return view('bbs.show', ['post' => $post]);
     }
 
     /**

@@ -30,6 +30,7 @@
          </div>
           @enderror
         </div>
+        
 
         <div class = "col-12 m-2">
             <label for="image" class="form-label">첨부 이미지</label>

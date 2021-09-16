@@ -11,11 +11,14 @@
         <tbody>
           @foreach ($posts as $post)
               <tr>
-                  <td>{{ $post->title }}</td>
+                  <td><a href="{{ route('posts.show',['post'=>$post->id]) }}">{{ $post->title }}
+                {{-- 해당라우터는 php artisan serve route:list보면 {post}에 무언가 넣어줘야됨 --}}
+                </a></td>
                   <td>{{ $post->writer->name }}</td>
                   <td>{{ $post->created_at->diffForHumans() }}</td>
               </tr>
           @endforeach
         </tbody>
     </table>
+    {{ $posts ->links() }}
 </div>
