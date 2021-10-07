@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class PostsController extends Controller
 {
@@ -73,6 +74,7 @@ class PostsController extends Controller
         }
 
         Post::create($input);
+        //Post객체에서 fillable설정을 해야 대량 입력이 가능한 것.
 
         return redirect()->route('posts.index');
         //뷰는 라우터가 아니라 파일경로를 알려줘야지.
@@ -100,7 +102,9 @@ class PostsController extends Controller
      */
     public function edit($id)
     {
-        //
+        //수정버튼 눌렀을 때
+        //$id에 해당하는 포스트를 수정할 수 있는 페이지를 반환해주면 된다.
+        return view('bbs.edit', ['post' => Post::find($id)]);
     }
 
     /**
@@ -112,7 +116,45 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //수정완료 버튼을 눌렀을 때
+        //$request가 있는 이유 : 바뀐애가 오니까.
+        $request->validate([
+            'title' => 'required',
+            'content' => 'required|min:3',
+        ]);
+
+        $post = Post::find($id);
+        //덮어쓰기 위해 해당아이디에 해당하는 객체를 가져온다
+        // $post->title = $request->input['title'];
+        $post->title = $request->title;
+        $post->content = $request->content;
+        // $request 객체 안에 이미지가 있으면 
+        // 이 이미지를 이 게시글의 이미지로 변경하겠다.
+        if ($request->image) {
+            // 이 이미지를 이 게시글의 이미지로 파일 시스템에
+            // 저장하고, DB에 반영하기 전에 
+            // 기존 이미지가 있다면
+            // 그 이미지를 파일 시스템에서 삭제해줘야 한다. 
+            if ($post->image) {
+                Storage::delete('public/images/' . $post->image);
+            }
+            $fileName = time() . '_' .
+                $request->file('image')->getClientOriginalName();
+            $post->image = $fileName;
+            $request->file('image')->storeAs('public/images', $fileName);
+            //파일 시스템에 저장
+
+
+            //DB에 저장
+            // update posts set title = $request -> title,
+            // content =$request->content,
+            // image = fileName <=optional
+            // updated_at = now(),
+        }
+        $post->save();
+        return redirect()->route('posts.show', ['post' => $post->id]);
+
+        //화면을 띄워야 되고
     }
 
     /**
@@ -121,8 +163,24 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        //
+        //$id는 라우터 파라미터, 그리고 매개변수 순서 지켜야 됨
+        $post = Post::find($id);
+        if ($post->image) {
+            Storage::delete('public/images/' . $post->image);
+        }
+        $post->delete();
+        //게시글에 딸린 이미지가 있으면 파일시스템에서도 삭제해줘야 한다.
+        return redirect()->route('posts.index');
+    }
+
+    public function deleteImage($id)
+    {
+        $post = Post::find($id);
+        Storage::delete('public/images/' . $post->image);
+        $post->image = null;
+        $post->save();
+        return redirect()->route('posts.edit', ['post' => $post->id]);
     }
 }
