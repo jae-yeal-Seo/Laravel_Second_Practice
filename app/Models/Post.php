@@ -33,4 +33,9 @@ class Post extends Model
          : 외래키 이름 : 메소드이름_기본키이름으로 해 둬야.(관례)
         */
     }
+
+    public function likes()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
