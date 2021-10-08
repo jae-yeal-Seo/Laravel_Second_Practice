@@ -12,13 +12,14 @@
           <h5 class="card-title">{{ $post->title }}</h5>
           <p class="card-text">{{ $post->content }}</p>
           <div>
-            <like-button/>
-        </div>
+            <like-button :post="{{ $post }}" :loginuser="{{ auth()->user()->id }}"/>
+         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">등록일:{{ $post->created_at->diffForHumans() }}</li>
           <li class="list-group-item">수정일:{{ $post->updated_at->diffForHumans() }}</li>
           <li class="list-group-item">작성자:{{ $post->writer->name }}</li>
         </ul>
+      </div>
         <div class="card-body flex"> 
 
           
@@ -39,17 +40,5 @@
         </form>
         </div>
       </div>
-      <script>
-        function confirmDelete(e){
-         myform = document.getElementById('form');
-          //id가 form인 dom을 찾아라.
-        flag = confirm('정말 삭제하시겠습니까?');
-        if(flag){
-          //서브밋
-          myform.submit();
-          //막았던 submit동작을 다시함.
-        }
-          // e.preventDefault(); //form이 서버로 전달되는 것을 막아준다. 
-        }
-      </script>
+      
 </div>

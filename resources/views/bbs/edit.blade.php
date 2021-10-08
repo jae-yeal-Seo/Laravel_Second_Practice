@@ -39,7 +39,7 @@
         <img class="w-20 h-20 rounded-full" src="{{ '/storage/images/'.$post->image }}" 
         class="card-img-top"  >
 
-        <button class="btn btn-danger h-10 mx-2 my-2" onclick="return deleteImage()">이미지 삭제</button>
+        <button class="btn btn-danger h-10 mx-2 my-2" onclick="return deleteImage({{ $post->id }})">이미지 삭제</button>
      
       </div>
         @else
@@ -54,16 +54,7 @@
         </div>
         
       </form>
-      <script>
-        function deleteImage(){
-          // alert('Hi~');
-          editForm = document.getElementById('editForm');
-          editForm._method.value = 'delete'
-          editForm.action = '/posts/images/{{ $post->id }}'
-          editForm.submit();
-          return false;
-        }
-      </script>
+      
     </div>
 
 </x-app-layout>

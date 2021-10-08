@@ -23,6 +23,6 @@ Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-Route::post('/like/{$post}', [LikesController::class, 'store'])->middleware(['auth'])->name('like.store');
+Route::post('/like/{post}', [LikesController::class, 'store'])->middleware(['auth'])->name('like.store');
 
 require __DIR__ . '/auth.php';

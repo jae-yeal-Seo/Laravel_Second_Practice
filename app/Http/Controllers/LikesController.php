@@ -13,6 +13,7 @@ class LikesController extends Controller
      */
     public function store(Post $post)
     {
-        $post->likes()->toggle(auth()->user());
+        //자동으로 모델을 반환한다.
+        return $post->likes()->toggle(auth()->user());
     }
 }
