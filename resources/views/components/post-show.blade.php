@@ -12,7 +12,7 @@
           <h5 class="card-title">{{ $post->title }}</h5>
           <p class="card-text">{{ $post->content }}</p>
           <div>
-            <like-button :post="{{ $post }}" :loginuser="{{ auth()->user()->id }}"/>
+            <like-button :post="{{ $post }}" :loginuser="{{ auth()->user()->id }}" :likepeople="{{ $post->likes->count() }}"/>
          </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">등록일:{{ $post->created_at->diffForHumans() }}</li>

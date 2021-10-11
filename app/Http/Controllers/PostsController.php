@@ -27,7 +27,11 @@ class PostsController extends Controller
         //제일 최신순 --> latest
         // $posts = Post::latest()->get();
         // $posts = Post::oldest()->get();
-        $posts = Post::latest()->paginate(10);
+
+
+        $posts = Post::with('likes')->latest()->paginate(10);
+
+
         return view('bbs.index', ['posts' => $posts]);
     }
 
