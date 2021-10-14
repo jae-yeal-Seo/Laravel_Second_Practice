@@ -28,15 +28,15 @@ export default{
         .then(response=>{
            console.log(response.data);
            this.like = !this.like;
-           if(this.like==true){
-               likepeopledata = this.likepeopledata + 1;
+           if(this.like==false){
+               this.likepeopledata = this.likepeopledata - 1;
            }
            else{
-               likepeopledata = this.likepeopledata - 1;
+               this.likepeopledata= this.likepeopledata + 1;
            }
         })
-        .catch(error=>{});
-            console.log(error);
+        .catch(error=>{console.log(error);});
+            
         
         },
         checkLikes(){

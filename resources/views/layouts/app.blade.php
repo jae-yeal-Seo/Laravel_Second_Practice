@@ -15,6 +15,7 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
@@ -33,6 +34,10 @@
             </main>
         </div>
         <script>
+            @if(session('success'))
+            showSuccessMsg();
+            @endif
+
         function confirmDelete(e){
             myform = document.getElementById('form');
              //id가 form인 dom을 찾아라.
@@ -54,6 +59,15 @@
           return false;
         }
       
+        function showSuccessMsg(){
+            Swal.fire({
+  position: 'top-center',
+  icon: 'success',
+  title: 'Your work has been saved',
+  showConfirmButton: false,
+  timer: 1500
+})
+        }
         </script>
     </body>
 </html>

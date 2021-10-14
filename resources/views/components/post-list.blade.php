@@ -6,6 +6,7 @@
                 <th scope="col">제목</th>
                 <th scope="col">작성자</th>
                 <th scope="col">작성일</th>
+                <th scope="col">좋아요 수</th>
             </tr>
         </thead>
         <tbody>
@@ -18,7 +19,7 @@
                 <td>{{ $post->created_at->diffForHumans() }}</td>
                 {{-- <td><like-button :loginuser="{{ auth()->user()->id }}" :post="{{ $post }}" /></td>
                 <td>{{ $post->likes->count() }}</td> --}}
-                <td><like-button :loginuser="{{ auth()->user()->id }}" :post="{{$post}}" :likepeople="{{ $post->likes->count() }}"/> </td>
+                <td><like-button :loginuser="{{ auth()->user()->id }}" :post="{{ $post }}" :likepeople="{{ $post->likes->count() }}"/> </td>
               </tr>
           @endforeach
         </tbody>

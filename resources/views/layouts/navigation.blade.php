@@ -18,6 +18,7 @@
                     <x-responsive-nav-link :href="route('posts.index')" :active="request()->routeIs('posts.index')">
                         {{ __('Posts') }}
                     </x-responsive-nav-link>
+                    
                 </div>
             </div>
 

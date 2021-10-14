@@ -11,4 +11,4 @@
     </div>
     </x-slot>
     <x-post-show :post="$post" />
-</x-app-layout>
+</x-app-layout>w

@@ -57,7 +57,9 @@ class PostsController extends Controller
             'title' => 'required',
             'content' => 'required|min:3',
         ]);
+        ///여기까지
 
+        $input = array_merge($request->all(), ["user_id" => Auth::user()->id]);
 
 
         if ($request->hasFile('image')) {
@@ -65,22 +67,22 @@ class PostsController extends Controller
                 $request->file('image')->getClientOriginalName();
             $request->file('image')
                 ->storeAs('public/images', $fileName);
+            $input = array_merge($input, ['image' => $fileName]);
         }
         // dd($request->all());
-        $input = array_merge($request->all(), ["user_id" => Auth::user()->id]);
+
         //array_merge : 배열을 합침 
         // --> 3개는 들어가고 나머지는 없어도 됨.
 
         //Eloquent model의 white list인 $fillable에 기술해야 
-        //Post::create사용가능
-        if ($fileName) {
-            $input = array_merge($input, ['image' => $fileName]);
-        }
+        //Post::create사용가능 
+
 
         Post::create($input);
         //Post객체에서 fillable설정을 해야 대량 입력이 가능한 것.
 
-        return redirect()->route('posts.index');
+        return redirect()->route('posts.index')->with('success', 1);
+        //서버상의 session이다. 
         //뷰는 라우터가 아니라 파일경로를 알려줘야지.
     }
 
