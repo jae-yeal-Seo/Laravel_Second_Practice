@@ -11,4 +11,5 @@
     </div>
     </x-slot>
     <x-post-show :post="$post" />
+    {{-- 여기다가 댓글 컴포넌트 --}}
 </x-app-layout>w
