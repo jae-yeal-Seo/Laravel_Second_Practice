@@ -26,9 +26,10 @@ Route::get('/', function () {
 
 Route::post('/like/{post}', [LikesController::class, 'store'])->middleware(['auth'])->name('like.store');
 
-Route::post('comments/{post}', [CommentsController::class, 'store'])->middleware(['auth'])->name('comment.store');
-Route::get('comments/{post}', [CommentsController::class, 'index'])->name('comment.index');
-Route::put('comments/{post}/{comment}', [CommentsController::class, 'update'])->middleware(['auth'])->name('comment.update');
-Route::delete('comments/{post}/{comment}', [CommentsController::class, 'destroy'])->middleware(['auth'])->name('comment.destroy');
+Route::post('comments/{post}', [CommentsController::class, 'store'])->middleware(['auth'])->name('comments.store');
+Route::get('comments/{post}', [CommentsController::class, 'index'])->name('comments.index');
+Route::put('comments/{comment}', [CommentsController::class, 'update'])->middleware(['auth'])->name('comments.update');
+Route::delete('comments/{comment}', [CommentsController::class, 'destroy'])->middleware(['auth'])->name('comments.destroy');
+
 
 require __DIR__ . '/auth.php';

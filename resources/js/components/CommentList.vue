@@ -21,6 +21,7 @@ export default{
     
     methods:{
         getComments(){
+           
             this.comments=['1임','2임','3임'];
         //서버에 현재 게시글의 댓글 리스트를 비동기적으로 요청
         //즉, axios를 이용해서 요청.
