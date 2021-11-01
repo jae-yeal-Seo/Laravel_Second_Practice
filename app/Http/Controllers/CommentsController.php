@@ -17,7 +17,8 @@ class CommentsController extends Controller
         // CommentList에서 axios.get('/comments/'+this.post.id').then(response=>console.log(response))
         // 을 한다. response안에 comments가 담겨있다. 
         //select써서 comment하고 id(comment의 id)만 가져오면 될 것 같다.
-        $comments = Comment::where('post_id', $post)->latest()->paginate(10);
+        $comments = Comment::where('post_id', $post)->latest()->get();
+        // dd($comments);
         return $comments;
     }
 
@@ -28,17 +29,29 @@ class CommentsController extends Controller
         $comment = Comment::find($id);
         $comment->comment = $request->comment;
         $comment->save();
+
+        return $comment;
     }
 
     public function destroy($id)
     {
         $comment = Comment::find($id);
         $comment->delete();
+
+        return $comment;
     }
 
     public function store(Request $request, $post)
     {
-        $input = array_merge($request->all(), ["user_id" => Auth::auth()->id, "post_id" => $post]);
-        Comment::create($input);
+        $request->validate([
+            'comment' => 'required|min:1',
+        ]);
+        $comment = Comment::create([
+            'comment' => $request->comment,
+            "user_id" => Auth::auth()->id,
+            "post_id" => $post
+        ]);
+
+        return $comment;
     }
 }

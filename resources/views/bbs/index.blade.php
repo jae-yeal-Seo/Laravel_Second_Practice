@@ -7,5 +7,5 @@
         <button onclick=location.href="{{ route('posts.create') }}" type="button" class="btn btn-danger font-bold hover:bg-yellow-700">글쓰기</button>
     </div>
     </x-slot>
-    <x-post-list :posts="$posts" />
+    <x-post-list :posts="$posts"/>
 </x-app-layout>

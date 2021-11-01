@@ -21,6 +21,12 @@ class CommentFactory extends Factory
      */
     public function definition()
     {
-        return [];
+        return [
+            'comment' => $this->faker->sentence(10),
+            'user_id' => 1,
+            'post_id' => 2,
+            'created_at' => now(),
+            'updated_at' => now()
+        ];
     }
 }
