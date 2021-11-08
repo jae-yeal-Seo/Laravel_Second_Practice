@@ -42,6 +42,7 @@ class PostsController extends Controller
      */
     public function create()
     {
+
         return view('bbs.create');
     }
 
@@ -107,8 +108,15 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
+        //의존성 주입
+        //DI(Dependecy Injection)
+        $post = Post::find($id);
+        // if ($request->user()->cannot('update', $post)) {
+        //     abort(403);
+        // }
+        $this->authorize('update', $post);
         //수정버튼 눌렀을 때
         //$id에 해당하는 포스트를 수정할 수 있는 페이지를 반환해주면 된다.
         return view('bbs.edit', ['post' => Post::find($id)]);
@@ -123,6 +131,8 @@ class PostsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $post = Post::find($id);
+        $this->authorize('update', $post);
         //수정완료 버튼을 눌렀을 때
         //$request가 있는 이유 : 바뀐애가 오니까.
         $request->validate([
@@ -172,7 +182,14 @@ class PostsController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+
+        $post = Post::find($id);
+        $this->authorize('delete', $post);
         //$id는 라우터 파라미터, 그리고 매개변수 순서 지켜야 됨
+        $post = Post::find($id);
+        if ($request->user()->cannot('delete', $post)) {
+            abort(403);
+        }
         $post = Post::find($id);
         if ($post->image) {
             Storage::delete('public/images/' . $post->image);
@@ -184,6 +201,8 @@ class PostsController extends Controller
 
     public function deleteImage($id)
     {
+        $post = Post::find($id);
+        $this->authorize('delete', $post);
         $post = Post::find($id);
         Storage::delete('public/images/' . $post->image);
         $post->image = null;

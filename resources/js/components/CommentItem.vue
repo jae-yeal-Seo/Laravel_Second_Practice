@@ -12,7 +12,7 @@
                 <div class="bg-gray-100 w-auto rounded-xl px-2 pb-2">
                 <div class="font-medium">
                     <a href="#" class="hover:underline text-sm"> 
-                    <small>{{ comment.user.name }}</small>
+                    <small>{{ comment.user.name}}</small>
                     </a>
                 </div>
                 <div class="text-xs">
@@ -30,8 +30,8 @@
               </div>
             <div class="flex justify-start items-center text-xs w-full">
               <div class="font-semibold text-gray-700 px-2 flex items-center justify-center space-x-1">
-                <a href="#" class="hover:underline">
-                  <small>Like</small>
+                <a href="#" class="hover:underline" v-if="comment.user_id == login_user_id">
+                  <small>Update</small>
                 </a>
                <small class="self-center">.</small>
                 <a href="#" class="hover:underline">
@@ -58,6 +58,6 @@
 
 <script>
 export default {
-    props: ['comment'],
+    props: ['comment','login_user_id'],
 }
 </script>

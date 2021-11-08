@@ -22,10 +22,11 @@
       </div>
         <div class="card-body flex"> 
 
-          
+           @can('update',$post)
           <a href="{{ route('posts.edit',['post'=>$post->id]) }}" class="card-link">수정하기</a>
+           @endcan
 
-
+           @can('delete',$post)
           <form id="form" class="ml-4" method="post" onsubmit="event.preventDefault(); confirmDelete(event)" action="{{ route('posts.destroy',['post'=>$post->id]) }}">
             {{-- event는 submit이 된다. --}}
             {{-- onsubmit = "submit이벤터가 발생하면" --}}
@@ -38,6 +39,7 @@
           <button type="submit">삭제하기</button>
           {{-- delete(post)방식으로 보내야 함. a태그는 get방식만을 받기 때문에 form태그로 함.--}}
         </form>
+        @endcan
         </div>
       </div>
       <div class="card mt-2 mb-5" style="width: 100%; margin:10px">

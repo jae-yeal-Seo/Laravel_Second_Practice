@@ -17,7 +17,9 @@ class CommentsController extends Controller
         // CommentList에서 axios.get('/comments/'+this.post.id').then(response=>console.log(response))
         // 을 한다. response안에 comments가 담겨있다. 
         //select써서 comment하고 id(comment의 id)만 가져오면 될 것 같다.
-        $comments = Comment::where('post_id', $post)->with('user')->latest()->get();
+        $comments = Comment::where('post_id', $post)->with('user')->latest()->paginate(5);
+        //paginate를 하면 Object로써 comments뿐만 아니라 더 많은 정보를 주게 된다.
+        //blade처럼 서버에서 가져올 수 없기때문에(vue는) 그래서 한꺼번에 가져다주는 것이다.
         // dd($comments);
         return $comments;
     }
@@ -47,8 +49,8 @@ class CommentsController extends Controller
             'comment' => 'required|min:1',
         ]);
         $comment = Comment::create([
-            'comment' => $request->comment,
-            "user_id" => Auth::auth()->id,
+            "comment" => $request->comment,
+            "user_id" => Auth::user()->id,
             "post_id" => $post
         ]);
 

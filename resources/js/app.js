@@ -29,6 +29,7 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('like-button', require('./components/LikeButton.vue').default);
 Vue.component('comment-list', require('./components/CommentList.vue').default);
 Vue.component('comment-item', require('./components/CommentItem.vue').default);
+Vue.component('pagination', require('./components/Pagination.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
