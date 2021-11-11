@@ -8,12 +8,13 @@ require('./bootstrap');
 
 
 window.Vue = require('vue').default;
+import Vue from 'vue'
 
-import Alpine from 'alpinejs';
- window.Alpine = Alpine;
- Alpine.start();
+// import Alpine from 'alpinejs';
+//  window.Alpine = Alpine;
+//  Alpine.start();
 
- window.Swal = require('sweetalert2');
+//  window.Swal = require('sweetalert2');
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
